@@ -1,0 +1,93 @@
+<div class="col-md-12 text-light text-center sticky-top headr-style">
+    <div class="offset-md-5 name-style">
+        Admin Home
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-4 text-center admin-table-header">
+        <h2>
+            Unassigned Assets Users &nbsp;
+        <button class="btn btn-outline-dark refresh-btton-style" (click)="getUsersShortDetails()">refresh</button>
+    </h2>
+       
+  
+       
+</div>
+<div class="row">
+    <div class="col-md-4 scrollbar">
+        <table class="table table-hover text-center table-style">
+            <tr>
+            <th *ngFor="let column of ViewHeaders">
+                {{column}}
+            </th>
+            </tr>
+        
+            <tr *ngFor="let row of rows;let i =index">
+                <td *ngFor="let column of ValueHeaders" class="sample"  (click)="rowClick(row)">
+                    <span *ngFor="let name of ViewHeaders">
+                        <span *ngIf="name =='#' && column==''">{{i+1}}</span>
+                        <span *ngIf="name =='First' && column =='firstName'" > {{row[column]}}</span>
+                        <span *ngIf="name =='Last' && column=='lastName'" > {{row[column]}}</span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-7">
+        <div class="row" style="margin-top: 1%;">
+            <span style="margin-left: 2%;"></span>
+            <button class="offset-md-1 col-md-3 btn btn-outline-warning" (click)="viewAssetsDetails()">Assets Statistics</button>
+            <span style="margin-left: 6.3%;"></span>
+            <button class="offset-md-5 col-md-2 btn btn-outline-danger" (click)="logout()">Logout</button>
+        </div>
+        <div style="margin-top: 3%;" *ngIf="isUserSelected">
+            <div class="row">
+                <div class="col-md-5 offset-md-1 input-group">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.firstName">
+                    </div>
+               </div>
+                <div class="col-md-5 input-group">
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.lastName">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 input-group display-style">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.emailId">
+                    </div>
+                </div>
+                <div class="col-md-5 input-group">
+                    <div class="form-group">
+                        <label>Mobile No</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.mobileNo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 input-group">
+                    <div class="form-group">
+                        <label>Date of Joining</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.dateOfJoining">
+                    </div>
+                </div>
+                <div class="col-md-5 input-group">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.department">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 2%;">
+                <span style="margin-left: 2%;"></span>
+                <button class="offset-md-1 col-md-3 btn btn-outline-primary" (click)="recommondedAssets()">Recommended</button>
+                <button class="offset-md-1 col-md-3 btn btn-outline-success" (click)="manualAssign()">Assign Manually</button>
+            </div>
+        </div>
+    </div>
+</div> 

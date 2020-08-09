@@ -1,0 +1,70 @@
+<div class="col-md-12 text-light justify-content-center sticky-top headr-style">
+  <span style="margin-left: 5%;"></span> <button class="text-light offset-md-11 header-button" (click)="close()">X</button>
+</div>
+  <form #assetForm="ngForm" class="container mt-3" (ngSubmit)="assetForm.form.valid">
+      <div class="row justify-content-center">
+        <div class="col-10">
+            
+          <section class="container border mb-4 p-3" *ngFor="let asset of assetAssign; let i = index;">
+            <div class="row">
+              <div class="col-6">
+                  <h4>Asset {{i + 1}}</h4>
+              </div>
+              <div class="col-6 text-right">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)">Remove</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 input-group">
+                  <div class="form-group">
+                      <label>Type</label>
+                      <select class="form-control" [(ngModel)]="asset.name" name="name_{{asset.id}}" placeholder="Monitor"
+                              required #ty="ngModel"  [class.is-invalid]="ty.touched && ty.invalid"
+                             (ngModelChange)="changeFunction($event,i)">
+                        <option  *ngFor="let type of assetTypes" value="{{type}}">{{type}}</option>
+
+                      </select>
+                      <span class="text-danger" [class.d-none]="ty.valid || ty.untouched"></span>
+                    </div>
+              </div>
+              <span style="margin-left: 1%;"></span>
+              <div class="col-md-8  input-group spec">
+                  <div class="form-group">
+                      <label>Specification</label>
+                      <select class="form-control dd-menu" [(ngModel)]="asset.key" name="key_{{asset.id}}" 
+                              required #sf="ngModel" [class.is-invalid]="sf.touched && sf.invalid" placeholder="HP"
+                               [disabled]="asset.name == ''">
+                            <option *ngFor="let type of dd[i]" 
+                             value="{{type.assetKey}}">
+                            {{type.assetName}}</option>
+                      </select>
+                      <span class="text-danger" [class.d-none]="sf.valid || sf.untouched"></span>
+                    </div>
+              </div>
+              <span style="margin-left: 1%;"></span>
+              <div class="input-group" style="width:80px;">
+                  <div class="form-group">
+                      <label>Count</label>
+                      <input type="text" required class="form-control"
+                       [(ngModel)]="asset.count" name="count_{{asset.id}}" #fn="ngModel" pattern="[1-2]{1}" [class.is-invalid]="fn.touched && fn.invalid">
+                       <span class="text-danger" [class.d-none]="fn.valid || fn.untouched"></span>
+                       <div *ngIf="fn.errors?.pattern" class="text-danger">Max 2</div>
+                       
+                    </div>
+              </div>
+            </div>
+          </section>
+          <div class="row ">
+          <div class="col-6">
+              <button type="button" class="btn btn-primary mb-2" (click)="addAddress()"
+              [disabled]="assetForm.invalid">Add +</button>
+          </div>
+          <div class="col-6">
+              <button type="button" class="btn btn-success mb-2 offset-md-10" (click)="logValue()"
+              [disabled]="assetForm.invalid">Assign</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    
+    </form>

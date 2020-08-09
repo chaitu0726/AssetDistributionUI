@@ -1,0 +1,21 @@
+<div class="col-md-12 text-light justify-content-center sticky-top headr-style">
+   <span style="margin-left: 5%;"></span> <button class="text-light offset-md-11 header-button" (click)="close()">X</button>
+</div>
+<table class="table table-hover table-style">
+    <tr>
+    <th *ngFor="let column of viewHeaders" style="margin-top: 1%;">
+        {{column}} 
+    </th>  
+    </tr>
+
+    <tr *ngFor="let row of rows;let i =index;">
+        <td *ngFor="let column of valueHeaders">
+           <span *ngIf="column =='#'">{{i+1}}</span> {{row[column]}}
+        </td>
+    </tr>
+</table>
+<div class="col-md-12 text-center">
+    <button class="btn btn-outline-success col-md-2" *ngIf="mode=='recommonded'" (click)="assignToUser()">Assign</button>
+    <button class="btn btn-outline-danger col-md-2" *ngIf="mode=='view'" (click)="leaveFromUser()">Leave Assets</button>
+</div>
+ 

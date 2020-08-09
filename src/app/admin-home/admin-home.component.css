@@ -1,0 +1,42 @@
+.headr-style{
+    height: 50px; 
+    background-color: black;
+}
+.name-style{
+    position: absolute;
+    bottom: 5px;
+    font-size: xx-large;
+}
+.sample:hover {
+    background-color:lightgray;
+  }
+  .nametable{
+    overflow-y: scroll;
+  }
+  .scrollbar {
+    background-color: #F5F5F5;
+    float: left;
+    height: 495px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    width: 65px;
+    overflow-y: scroll;
+}
+.admin-table-header{
+    background-color: lightgrey;
+    height: 30px;
+}
+.display-style{
+    display: block;
+}
+.custom-dialog  .mat-dialog-container {
+        padding: 0;
+}
+.mat-dialog-container .custom-dialog  {
+    padding: 0;
+}
+.refresh-btton-style
+{
+    font-size: 15px;
+    padding: 3px;
+}

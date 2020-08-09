@@ -1,0 +1,19 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+    <mat-card fxFlex="25">
+      <mat-toolbar color="primary">Login Page</mat-toolbar>
+      <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" required matInput placeholder="Username" name="userName" [(ngModel)]="userName">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input type="password" required matInput placeholder="Password" name="userPassword" [(ngModel)]="userPassword">
+        </mat-form-field>
+        <button mat-raised-button class="btn btn-outline-success" [disabled]="userName=='' || userPassword==''" type="submit" (click)="login()">Login</button>
+        <div *ngIf="isInvalidUser" style="margin-top: 0.3%;">
+            <span class="text-danger">
+                Invalid Username or Password
+            </span>
+        </div>
+      </form>
+    </mat-card>
+</div>
