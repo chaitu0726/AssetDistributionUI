@@ -135,4 +135,5 @@ export class AdminHomeComponent implements OnInit {
   let dialogRef =  this.dialog.open(ProgressBarComponent,dialogConfig);
   return dialogRef;
  }
+ //Sample push
 }
