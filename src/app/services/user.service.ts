@@ -9,7 +9,7 @@ import { UserAssignAssset } from '../model/Assets';
 export class UserService {
 
 
-  private URL : string = "http://localhost:8080";
+  private URL : string = "ec2-54-89-58-29.compute-1.amazonaws.com:8080";
   constructor(private http :HttpClient) {}
 
   public getUserDetail():Observable<UserDetail>
