@@ -9,7 +9,7 @@ import { AssetInfo, AssetAssign, RecommandedAssets, AssetsDropDown, UserAssignAs
 export class AdminService {
 
   
-  private URL : string = "ec2-54-89-58-29.compute-1.amazonaws.com:8080";
+  private URL : string = "http://ec2-35-153-98-91.compute-1.amazonaws.com:8080";
   constructor(private http :HttpClient) {}
 
   public getShortUsersDetails():Observable<UserShortDetails[]>
