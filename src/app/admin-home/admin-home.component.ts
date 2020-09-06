@@ -143,5 +143,5 @@ export class AdminHomeComponent implements OnInit {
   let dialogRef =  this.dialog.open(ProgressBarComponent,dialogConfig);
   return dialogRef;
  }
- //Sample push1 to V2.0
+ //Sample push11 to V2.0
 }
