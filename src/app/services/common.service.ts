@@ -9,7 +9,7 @@ import { Login } from '../model/Login';
 })
 export class CommonService {
 
-  private URL : string = "http://ec2-35-153-98-91.compute-1.amazonaws.com:8080";
+  private URL : string = "http://ec2-54-209-216-148.compute-1.amazonaws.com:8080";
   constructor(private http :HttpClient) {}
               
 
