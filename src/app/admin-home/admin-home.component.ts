@@ -90,10 +90,18 @@ export class AdminHomeComponent implements OnInit {
       
     });
     //this.dialogForOperations(this.tableData); 
+    /*
+    this.isUserSelected = false;
+    this.getUsersShortDetails();
+    */
   }
   public manualAssign()
   {
     this.dialogForManual(this.userId);
+      /*
+    this.isUserSelected = false;
+    this.getUsersShortDetails();
+    */
   }
 
   public logout()
