@@ -9,6 +9,7 @@ import { AssetInfo, AssetAssign } from '../model/Assets';
 import { TableData } from '../model/TableData';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
+import { AddAssetsComponent } from '../add-assets/add-assets.component';
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
@@ -23,7 +24,7 @@ export class AdminHomeComponent implements OnInit {
   public mode:string='';
   public department:string='';
   public userId:number=0;
-
+  public userRole:string;
   public rows:UserShortDetails[];
   public user:UserDetail;
   public assetInfo:AssetInfo[];
@@ -51,11 +52,11 @@ export class AdminHomeComponent implements OnInit {
   rowClick(rowData:UserShortDetails)
   {
     let progressBarRef = this.progressBar();
-   
+    
     this.adminService.getUserDetail(rowData.userId).subscribe(data=>{
         this.user = data;
          this.isUserSelected = true;
-        this.department = data.department;
+        this.department = data.userRole;
         this.userId = data.userId;
         progressBarRef.close();
 
@@ -67,45 +68,70 @@ export class AdminHomeComponent implements OnInit {
   {
       let progressBarRef = this.progressBar();
       this.adminService.getAssetsDetails().subscribe(data=>{
-      this.assetInfo = data;
-      progressBarRef.close();
-      let viewHeaders =["","#","Specification","Assigned","Available","",""];
-      let valueHeaders = ["","#","assetName","assignedAssets","availableAssets"];
-      this.mode = "asset";
-      this.tableData = new TableData(viewHeaders,valueHeaders,this.assetInfo,this.mode,0);
-      this.dialogForOperations(this.tableData);
-      });
+          this.assetInfo = data;
+          progressBarRef.close();
+          let viewHeaders =["","#","Specification","Assigned","Available","",""];
+          let valueHeaders = ["","#","assetName","assignedAssets","availableAssets"];
+          this.mode = "asset";
+          this.tableData = new TableData(viewHeaders,valueHeaders,this.assetInfo,this.mode,0);
+          this.dialogForOperations(this.tableData);
+          });
+     
       //this.dialogForOperations();
   }
   public recommondedAssets()
   {
     let progressBarRef = this.progressBar();
-    this.adminService.getRecommandedAssets(this.department).subscribe(data=>{
-      let viewHeaders =["","#","Specification","Qty..","",""];
-      let valueHeaders = ["","#","assetName","assetCount","",""];
-      this.mode = "recommonded";
-      this.tableData = new TableData(viewHeaders,valueHeaders,data,this.mode,this.userId);
-      progressBarRef.close();
-      this.dialogForOperations(this.tableData);
-      
-    });
+    this.adminService.getUserDetail(this.userId).subscribe(data=>{
+      if(data.isAssetsAssign.toLowerCase() == "no")
+      {
+        this.adminService.getRecommandedAssets(this.department).subscribe(data=>{
+          let viewHeaders =["","#","Specification","Qty..","",""];
+          let valueHeaders = ["","#","assetName","assetCount","",""];
+          this.mode = "recommonded";
+          this.tableData = new TableData(viewHeaders,valueHeaders,data,this.mode,this.userId);
+          progressBarRef.close();
+          this.dialogForOperations(this.tableData);
+          
+        });
+      }
+      else{
+        this.isUserSelected = false;
+        progressBarRef.close();
+        this.getUsersShortDetails();
+      }
+  });
     //this.dialogForOperations(this.tableData); 
     /*
     this.isUserSelected = false;
     this.getUsersShortDetails();
     */
   }
-  public manualAssign()
+  public manualAssign(mode:string)
   {
-    this.dialogForManual(this.userId);
-      /*
-    this.isUserSelected = false;
-    this.getUsersShortDetails();
-    */
+    console.log(mode)
+    sessionStorage.setItem("manual-mode",mode.toString());
+    if(mode == 'Assign'){
+    let progressBarRef = this.progressBar();
+    this.adminService.getUserDetail(this.userId).subscribe(data=>{
+      if(data.isAssetsAssign.toLowerCase() == "no")
+      {
+        this.dialogForManual(this.userId);
+      }
+      else{
+        this.isUserSelected = false;
+        this.getUsersShortDetails();
+      }
+      progressBarRef.close();
+    });
+  }else{
+    this.dialogForManual(0);
   }
+}
 
   public logout()
   {
+    console.log("logout menu");
     this.commonService.logout().subscribe(data=>{
       sessionStorage.clear();
       this.router.navigate(['/login']);
@@ -129,7 +155,7 @@ export class AdminHomeComponent implements OnInit {
   const dialogConfig = new MatDialogConfig();
   dialogConfig.disableClose = true;
   dialogConfig.height = "75%";
-  dialogConfig.width = "70%";
+  dialogConfig.width = "85%";
   dialogConfig.panelClass='custom-dialog';
   dialogConfig.data = data;
   this.dialog.open(AssetsAssignComponent,dialogConfig);
@@ -144,4 +170,14 @@ export class AdminHomeComponent implements OnInit {
   return dialogRef;
  }
  //Sample push11 to V2.0
+
+ public addAsset()
+ {
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.disableClose = true;
+  dialogConfig.height = "75%";
+  dialogConfig.width = "70%";
+  dialogConfig.panelClass='custom-dialog';
+  this.dialog.open(AddAssetsComponent,dialogConfig);
+ }
 }

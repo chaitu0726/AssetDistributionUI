@@ -17,9 +17,10 @@ export class UserDetail
         public mobileNo:string,
         public dateOfJoining:string,
         public department:string,
-        public role:string,
+        public userRole:string,
         public isAssetsAssign:string,
-        public isDelete:string
+        public isDelete:string,
+        public service:string
     )
     {}
 }

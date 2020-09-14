@@ -1,6 +1,30 @@
-<div class="col-md-12 text-light text-center sticky-top headr-style">
-    <div class="offset-md-5 name-style">
+<div class="row text-light text-center sticky-top headr-style">
+    <div class="offset-md-5 col-md-2 name-style">
         Admin Home
+    </div>
+    <div class="offset-md-11 col-md-1">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="viewAssetsDetails()">
+              <mat-icon>visibility</mat-icon>
+              <span>Assets Statistics</span>
+            </button>
+            <button mat-menu-item (click)="addAsset()">
+              <mat-icon>add</mat-icon>
+              <span>Add Assets</span>
+            </button>
+            <button mat-menu-item (click)="manualAssign('Edit')">
+               <mat-icon>edit</mat-icon>
+              <span>Edit Recommonded Assets</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+            </button>
+          </mat-menu>
+          
     </div>
 </div>
 <div class="col-md-12">
@@ -10,7 +34,7 @@
         <button class="btn btn-outline-dark refresh-btton-style" (click)="getUsersShortDetails()">Refresh</button>
     </h2>
        
-  
+   
        
 </div>
 <div class="row">
@@ -34,12 +58,6 @@
         </table>
     </div>
     <div class="col-md-7">
-        <div class="row" style="margin-top: 1%;">
-            <span style="margin-left: 2%;"></span>
-            <button class="offset-md-1 col-md-3 btn btn-outline-warning" (click)="viewAssetsDetails()">Assets Statistics</button>
-            <span style="margin-left: 6.3%;"></span>
-            <button class="offset-md-5 col-md-2 btn btn-outline-danger" (click)="logout()">Logout</button>
-        </div>
         <div style="margin-top: 3%;" *ngIf="isUserSelected">
             <div class="row">
                 <div class="col-md-5 offset-md-1 input-group">
@@ -79,14 +97,14 @@
                 <div class="col-md-5 input-group">
                     <div class="form-group">
                         <label>Role</label>
-                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.department">
+                        <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="user.userRole">
                     </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 2%;">
                 <span style="margin-left: 2%;"></span>
                 <button class="offset-md-1 col-md-3 btn btn-outline-primary" (click)="recommondedAssets()">Recommended</button>
-                <button class="offset-md-1 col-md-3 btn btn-outline-success" (click)="manualAssign()">Assign Manually</button>
+                <button class="offset-md-1 col-md-3 btn btn-outline-success" (click)="manualAssign('Assign')">Assign Manually</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,67 @@
+<div>
+    <div class="col-md-12 text-light justify-content-center sticky-top headr-style">
+        <span style="margin-left: 5%;"></span> <button class="text-light offset-md-11 header-button" (click)="close()">X</button>
+     </div>
+    
+    <form (ngSubmit)="Myform.form.valid" style="margin-top:3%;" #Myform="ngForm">
+      <div class="row">
+        <div class="input-group">
+            <div class="form-group offset-md-1 col-md-3">
+                <label>Asset Type</label>
+                <select class="form-control" [(ngModel)]="assetType" name="assetType" placeholder="Select"
+                        required #ty="ngModel"  [class.is-invalid]="ty.touched && ty.invalid"
+                       (ngModelChange)="changeFunction($event)">
+                  <option  *ngFor="let type of assetKeyAndTypedropdown" value="{{type.assetType}}">{{type.assetType}}</option>
+                </select>
+                <span class="text-danger" [class.d-none]="ty.valid || ty.untouched"></span>
+              </div>
+
+              <div class="form-group  offset-md-1 col-md-2" *ngIf="isAssetTypeNew">
+                <label>New Asset Type</label>
+                <input type="text" class="form-control" placeholder="Asset Type" required pattern="[A-Za-z]{3,25}" [(ngModel)]="newAssetType"
+                 name="newAssetType" #fk="ngModel" [class.is-invalid]="fk.touched && fk.invalid" (input)="isTypeDuplicate()">
+                <span class="text-danger" *ngIf="!isDuplicateType" [class.d-none]="fk.valid || fk.untouched">Minimum 3 Alphabates(no spaces)</span>
+                <span class="text-danger" *ngIf="isDuplicateType">Type is Already Present</span>
+            </div>
+
+              <div class="form-group  offset-md-1 col-md-2" *ngIf="isAssetTypeNew">
+                <label>Asset Key</label>
+                <input type="text" class="form-control" placeholder="Asset Key" required pattern="[A-Z]{2,5}" [(ngModel)]="assetKey"
+                 name="assetKey" #fn="ngModel" [class.is-invalid]="fn.touched && fn.invalid" (input)="isKeyDuplicate()">
+                <span class="text-danger" *ngIf="!isDuplicateKey" [class.d-none]="fn.valid || fn.untouched">Uppercase Alphabates(2-5)</span>
+                <span class="text-danger" *ngIf="isDuplicateKey">Key is Already Present</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isBelow">
+        <div class="input-group">
+            <div class="form-group  offset-md-1 col-md-10">
+                <label>Asset Info.</label>
+                <input type="text" class="form-control" placeholder="Asset Description" required pattern=".{6,}" [(ngModel)]="assetInfo" name="assetInfo" #fm="ngModel" [class.is-invalid]="fm.touched && fm.invalid">
+                <span class="text-danger" [class.d-none]="fm.valid || fm.untouched">Minimum 6 Characters</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isBelow">
+        <div class="input-group">
+            <div class="form-group  offset-md-1 col-md-5">
+                <label>Assets Numbers</label>
+                <input type="text" class="form-control" placeholder="Assets Numbers" required pattern="[0-9]{2,5}" [(ngModel)]="assetNumber" name="assetNumber" #fs="ngModel" [class.is-invalid]="fs.touched && fs.invalid">
+                <span class="text-danger" [class.d-none]="fs.valid || fs.untouched">Minimum 10 Assets</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isBelow">
+        <div class="input-group">
+            <div class="form-group  offset-md-4 col-md-2">
+                <button type="button" class="btn btn-outline-success mb-2" (click)="addAsset()"
+                [disabled]="Myform.invalid">Assign</button>
+
+            </div>
+        </div>
+    </div>
+    </form>
+</div>

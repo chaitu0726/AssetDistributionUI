@@ -3,7 +3,8 @@ export class UserAssignAssset
     constructor(
         public assetKey:string,
         public assetName:string,
-        public assetCount:number
+        public assetCount:number,
+        public assetType:string
     ){}
 }
 
@@ -15,7 +16,9 @@ export class AssetInfo//Assets in java
             public assetName:string,
             public assignedAssets:number,
             public availableAssets:number,
-            public totalAssets:number
+            public totalAssets:number,
+            public assetType:string,
+            public isNewType:boolean
     ){}
 }
 
@@ -60,3 +63,19 @@ export class AssetsDropDown
     ){}
 }
 
+export class AssetsKeys
+{
+    constructor(
+        public assetKeyId:number,
+        public assetType:string,
+        public assetKey:string
+    ){}
+}
+
+export class RecommandedAsset
+{
+    constructor(
+        public userRole:string,
+        public userAssignAssets:UserAssignAssset[]
+    ){}
+}

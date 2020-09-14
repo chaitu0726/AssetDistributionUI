@@ -1,13 +1,27 @@
 <div class="col-md-12 text-light justify-content-center sticky-top headr-style">
   <span style="margin-left: 5%;"></span> <button class="text-light offset-md-11 header-button" (click)="close()">X</button>
 </div>
+<div class="row" *ngIf="isEditMode">
+  <div class="input-group">
+    <div class="form-group offset-md-1 col-md-3">
+        <label>Select Role</label>
+        <select class="form-control" [(ngModel)]="selectedDepartment" name="selectedDepartment" placeholder="Select"
+                required #ky="ngModel"  [class.is-invalid]="ky.touched && ky.invalid"
+               (ngModelChange)="changeFunctionForRole($event)">
+          <option  *ngFor="let type of departmentListDopdown" value="{{type}}">{{type}}</option>
+        </select>
+        <span class="text-danger" [class.d-none]="ky.valid || ky.untouched"></span>
+      </div>
+    </div>
+</div>
+
   <form #assetForm="ngForm" class="container mt-3" (ngSubmit)="assetForm.form.valid">
       <div class="row justify-content-center">
         <div class="col-10">
             
           <section class="container border mb-4 p-3" *ngFor="let asset of assetAssign; let i = index;">
             <div class="row">
-              <div class="col-6">
+              <div class="col-6"> 
                   <h4>Asset {{i + 1}}</h4>
               </div>
               <div class="col-6 text-right">
@@ -18,9 +32,10 @@
               <div class="col-md-2 input-group">
                   <div class="form-group">
                       <label>Type</label>
-                      <select class="form-control" [(ngModel)]="asset.name" name="name_{{asset.id}}" placeholder="Monitor"
+                      <select class="form-control" [(ngModel)]="asset.type" name="name_{{asset.id}}" placeholder="Monitor"
                               required #ty="ngModel"  [class.is-invalid]="ty.touched && ty.invalid"
                              (ngModelChange)="changeFunction($event,i)">
+                        <option *ngIf="mode == 'Edit'" style="color:#ff6464" selected>{{asset.type}}</option>
                         <option  *ngFor="let type of assetTypes" value="{{type}}">{{type}}</option>
 
                       </select>
@@ -32,12 +47,14 @@
                   <div class="form-group">
                       <label>Specification</label>
                       <select class="form-control dd-menu" [(ngModel)]="asset.key" name="key_{{asset.id}}" 
-                              required #sf="ngModel" [class.is-invalid]="sf.touched && sf.invalid" placeholder="HP"
-                               [disabled]="asset.name == ''">
+                              required pattern=".{2,}" #sf="ngModel" [class.is-invalid]="sf.touched && sf.invalid" placeholder="HP"
+                               [disabled]="asset.type == '' ">
+                            <option *ngIf="mode == 'Edit'" style="color:#ff6464" selected>{{asset.name}}</option> 
+                            <option *ngIf="mode == 'Assign'" value="">Select</option>
                             <option *ngFor="let type of dd[i]" 
                              value="{{type.assetKey}}">
                             {{type.assetName}}</option>
-                      </select>
+                      </select> 
                       <span class="text-danger" [class.d-none]="sf.valid || sf.untouched"></span>
                     </div>
               </div>
@@ -61,7 +78,7 @@
           </div>
           <div class="col-6">
               <button type="button" class="btn btn-success mb-2 offset-md-10" (click)="logValue()"
-              [disabled]="assetForm.invalid">Assign</button>
+              [disabled]="assetForm.invalid && assetAssign.length == 0 ">{{buttonName}}</button>
           </div>
           </div>
         </div>

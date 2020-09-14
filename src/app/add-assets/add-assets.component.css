@@ -1,0 +1,27 @@
+.error-color
+{
+    color: red;
+}
+.close-button-style
+{
+    background-color: white;
+    border: none;
+}
+.header-style{
+    font-weight: bold;
+}
+@media (min-width: 240px) and (max-width: 767px) {
+.button.btn.btn-outline-primary{
+    padding: 5px 17px;
+}
+    
+  }
+
+  .header-button{
+    background: black;
+    border: none;
+}
+.headr-style{
+    height: 30px; 
+    background-color: black;
+}

@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable  } from 'rxjs';
 import { Login } from '../model/Login';
-
+import {Constants} from '../constant/ConstantData'
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  private URL : string = "http://ec2-54-209-216-148.compute-1.amazonaws.com:8080";
+  private URL : string = Constants.API_ENDPOINT;
   constructor(private http :HttpClient) {}
               
 

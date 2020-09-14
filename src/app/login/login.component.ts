@@ -29,8 +29,9 @@ export class LoginComponent implements OnInit {
     let loginDetails = new Login(this.userName,this.userPassword,'');
     this.commonService.login(loginDetails).subscribe(data=>{
 		console.log(data);
-        if(data.role == "admin")
+        if(data.role == "DG_CSO" || data.role == "DG_CST" || data.role == "IN_CSO" || data.role == "IN_CST")
         {
+          sessionStorage.setItem("role",data.role);
           this.isInvalidUser = false;
           progressRef.close();
           this.router.navigate(['/admin']);

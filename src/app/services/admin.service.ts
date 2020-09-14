@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable  } from 'rxjs';
 import { UserShortDetails, UserDetail } from '../model/User';
-import { AssetInfo, AssetAssign, RecommandedAssets, AssetsDropDown, UserAssignAssset } from '../model/Assets';
+import {Constants} from '../constant/ConstantData'
+import { AssetInfo, AssetAssign, RecommandedAssets, AssetsDropDown,RecommandedAsset, UserAssignAssset, AssetsKeys } from '../model/Assets';
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-
+ 
   
-  private URL : string = "http://ec2-54-209-216-148.compute-1.amazonaws.com:8080";
+  private URL : string = Constants.API_ENDPOINT;
   constructor(private http :HttpClient) {}
 
   public getShortUsersDetails():Observable<UserShortDetails[]>
   {
-    return this.http.get<UserShortDetails[]>(`${this.URL}/api/getnames`);
+    let role = sessionStorage.getItem("role").toString();
+    return this.http.get<UserShortDetails[]>(this.URL+"/api/getnames?role="+role);
   }
 
   public getUserDetail(id:number):Observable<UserDetail>
@@ -40,5 +42,26 @@ export class AdminService {
   public getAssetsDropDown():Observable<AssetsDropDown[]>
   {
     return this.http.get<AssetsDropDown[]>(`${this.URL}/api/getAssetsDropDown`);
+  }
+//==============================================================================
+  public getAssetsKeyAndTypes():Observable<AssetsKeys[]>
+  {
+    return this.http.get<AssetsKeys[]>(`${this.URL}/api/getAssetTypesDropDown`);
+  }
+
+  public addNewAssets(asset: AssetInfo):Observable<boolean>
+  {
+    //console.log(asset);
+    return this.http.post<boolean>(this.URL+"/api/addNewAsset",asset);
+  }
+
+  public editRecommondedAssets(assets:RecommandedAsset):Observable<number>
+  {
+    return this.http.post<number>(this.URL+"/api/setRecommendedAssets",assets);
+  }
+
+  public getUserRolesDropDown():Observable<string[]>
+  {
+    return this.http.get<string[]>(`${this.URL}/api/getRoleDropdown`);
   }
 } 

@@ -21,6 +21,9 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {HttpClientModule} from'@angular/common/http';
+import { AddAssetsComponent } from './add-assets/add-assets.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon'
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,8 @@ import {HttpClientModule} from'@angular/common/http';
     AdminHomeComponent,
     LoginComponent,
     DialogBoxComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    AddAssetsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,10 +49,12 @@ import {HttpClientModule} from'@angular/common/http';
     MatButtonModule,
     MatToolbarModule,
     MatProgressBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[ViewAssetsComponent,AssetsAssignComponent,ProgressBarComponent,DialogBoxComponent]
+  entryComponents:[ViewAssetsComponent,AssetsAssignComponent,ProgressBarComponent,DialogBoxComponent,AddAssetsComponent]
 })
 export class AppModule { }

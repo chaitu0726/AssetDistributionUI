@@ -5,6 +5,7 @@ import { ViewAssetsComponent } from './view-assets/view-assets.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { LoginComponent } from './login/login.component';
+import { AddAssetsComponent } from './add-assets/add-assets.component';
 
 
 
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path:'viewassets',component: ViewAssetsComponent},
   {path:'user',component: UserHomeComponent},
   {path:'admin',component: AdminHomeComponent},
-  {path:'login',component: LoginComponent}
+  {path:'login',component: LoginComponent},
+  {path:'add-assets',component: AddAssetsComponent}
 ];
 
 @NgModule({
