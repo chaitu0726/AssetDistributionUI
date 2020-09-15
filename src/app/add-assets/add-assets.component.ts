@@ -70,7 +70,7 @@ export class AddAssetsComponent implements OnInit {
   {
     console.log("add");
     let tempType="";
-    let tempKey="";
+    let tempKey=""; 
     if(this.isAssetTypeNew)
     {
         tempType = this.newAssetType;
@@ -110,7 +110,7 @@ export class AddAssetsComponent implements OnInit {
         this.isBelow = true;
         for(let j=0;j<this.keys.length;j++)
         {
-            if(this.assetKey == this.keys[j])
+            if(this.assetKey == this.keys[j] || this.isDuplicateType)
             {
               this.isBelow = false;
               this.isDuplicateKey = true;
@@ -136,7 +136,7 @@ export class AddAssetsComponent implements OnInit {
         this.isBelow = true;
         for(let j=0;j<this.assetKeyAndTypedropdown.length;j++)
         {
-            if(this.newAssetType.toLowerCase() == this.assetKeyAndTypedropdown[j].assetType.toLowerCase())
+            if(this.newAssetType.toLowerCase() == this.assetKeyAndTypedropdown[j].assetType.toLowerCase() || this.isDuplicateKey)
             {
               this.isBelow = false;
               this.isDuplicateType = true;

@@ -63,10 +63,10 @@
                   <div class="form-group">
                       <label>Count</label>
                       <input type="text" required class="form-control"
-                       [(ngModel)]="asset.count" name="count_{{asset.id}}" #fn="ngModel" pattern="[1-2]{1}" [class.is-invalid]="fn.touched && fn.invalid">
+                       [(ngModel)]="asset.count" name="count_{{asset.id}}" #fn="ngModel" pattern="[1-4]{1}" [class.is-invalid]="fn.touched && fn.invalid"
+                       (input)="isSufficientCount($event,i,asset.key)">
                        <span class="text-danger" [class.d-none]="fn.valid || fn.untouched"></span>
                        <div *ngIf="fn.errors?.pattern" class="text-danger">Max 2</div>
-                       
                     </div>
               </div>
             </div>

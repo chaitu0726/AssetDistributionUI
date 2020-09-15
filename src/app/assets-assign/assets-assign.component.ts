@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AssetDetails } from './assetDetails';
 import {MatDialog,MatDialogConfig,MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog';
-import { AssetsDropDown, UserAssignAssset,AssetsDistribute, AssetAssign, RecommandedAsset} from '../model/Assets';
+import { AssetsDropDown, UserAssignAssset,AssetsDistribute, AssetAssign, RecommandedAsset, AssetInfo} from '../model/Assets';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { AdminService } from '../services/admin.service';
 
@@ -55,6 +55,8 @@ export class AssetsAssignComponent implements OnInit {
   public departmentListDopdown:string[]=[];
   public selectedDepartment:string="";
   public buttonName:string="";
+  public isCountSufficient:boolean=true;
+  public assetInfo:AssetInfo[];
   ngOnInit() {
     this.mode = sessionStorage.getItem("manual-mode").toString();
     this.userId= this.data;
@@ -67,6 +69,16 @@ export class AssetsAssignComponent implements OnInit {
       this.getDepartmentListDropdown();
     }
     this.getDropDown();
+    this.getAssetInfo();
+  }
+  getAssetInfo()
+  {
+    let progressbarRef = this.progressBar();
+    this.adminService.getAssetsDetails().subscribe(data=>{
+      this.assetInfo = data;
+      progressbarRef.close();
+    });
+
   }
   getDropDown()
   {
@@ -111,6 +123,7 @@ export class AssetsAssignComponent implements OnInit {
      
     this.adminService.updateUser(assignAssets).subscribe(data=>{
       progressBarRef.close();
+      this.close();
       //snackbar event
       //this.close();
       });
@@ -189,5 +202,18 @@ export class AssetsAssignComponent implements OnInit {
       progressBarRef.close();
     });
  }
+ public isSufficientCount(data:string,indx:number,key:string){
+    let selectCount = Number(data);
+    for(let i =0;i<this.assetInfo.length;i++){
+      if(key == this.assetInfo[i].assetkey){
+        if(selectCount > this.assetInfo[i].availableAssets){
+          //this.isCountSufficient = false;
+          return true;
+        }
+      }
+    }
+  }
+
+  
 }
  

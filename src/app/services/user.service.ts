@@ -20,7 +20,7 @@ export class UserService {
 
   public getUserAssignAssets():Observable<UserAssignAssset>
   {
-    return this.http.get<UserAssignAssset>(`${this.URL}/api/getAssignAssets`);
+    return this.http.get<UserAssignAssset>(`${this.URL}/api/getassignassets`);
   }
 
   public leaveAssets(userAssets:UserAssignAssset[]):Observable<number>

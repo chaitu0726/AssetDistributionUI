@@ -46,7 +46,7 @@ export class AdminService {
 //==============================================================================
   public getAssetsKeyAndTypes():Observable<AssetsKeys[]>
   {
-    return this.http.get<AssetsKeys[]>(`${this.URL}/api/getAssetTypesDropDown`);
+    return this.http.get<AssetsKeys[]>(`${this.URL}/api/getAssetsTypesDropDown`);
   }
 
   public addNewAssets(asset: AssetInfo):Observable<boolean>
