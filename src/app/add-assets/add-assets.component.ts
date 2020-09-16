@@ -110,7 +110,7 @@ export class AddAssetsComponent implements OnInit {
         this.isBelow = true;
         for(let j=0;j<this.keys.length;j++)
         {
-            if(this.assetKey == this.keys[j] || this.isDuplicateType)
+            if(this.assetKey == this.keys[j])
             {
               this.isBelow = false;
               this.isDuplicateKey = true;
@@ -126,6 +126,10 @@ export class AddAssetsComponent implements OnInit {
         this.isBelow = false; 
         this.isDuplicateKey = false;
       }
+
+      if(this.isDuplicateKey || this.isDuplicateType){
+        this.isBelow = false;
+      }
   }
 
 
@@ -136,7 +140,7 @@ export class AddAssetsComponent implements OnInit {
         this.isBelow = true;
         for(let j=0;j<this.assetKeyAndTypedropdown.length;j++)
         {
-            if(this.newAssetType.toLowerCase() == this.assetKeyAndTypedropdown[j].assetType.toLowerCase() || this.isDuplicateKey)
+            if(this.newAssetType.toLowerCase() == this.assetKeyAndTypedropdown[j].assetType.toLowerCase())
             {
               this.isBelow = false;
               this.isDuplicateType = true;
@@ -151,6 +155,9 @@ export class AddAssetsComponent implements OnInit {
       else{
         this.isBelow = false; 
         this.isDuplicateType = false;
+      }
+      if(this.isDuplicateKey || this.isDuplicateType){
+        this.isBelow = false;
       }
   }
 

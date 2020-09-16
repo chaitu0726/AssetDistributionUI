@@ -46,7 +46,7 @@
             </th>
             </tr>
         
-            <tr *ngFor="let row of rows;let i =index">
+            <tr class="pointor" *ngFor="let row of rows;let i =index">
                 <td *ngFor="let column of ValueHeaders" class="sample"  (click)="rowClick(row)">
                     <span *ngFor="let name of ViewHeaders">
                         <span *ngIf="name =='#' && column==''">{{i+1}}</span>

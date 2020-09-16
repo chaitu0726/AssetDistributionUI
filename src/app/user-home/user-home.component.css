@@ -1,5 +1,5 @@
 .headr-style{
-    height: 100px; 
+    height: 50px; 
     background-color: black;
 }
 .name-style{
@@ -7,8 +7,9 @@
     bottom: 10px;
     font-size: xx-large;
 }
-.card-width{
+.card-width{ 
     max-width: 200px !important;
+    cursor: pointer;
 }
 .card-width:hover{
     background-color: lightgray;
