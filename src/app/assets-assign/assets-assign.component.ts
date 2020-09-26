@@ -43,6 +43,8 @@ export class AssetsAssignComponent implements OnInit {
     ) {}
     
    //constructor(){}
+  public isValidCount:boolean[]=[];
+  public countNumbers:number[]=[];
   public isEditMode:boolean=false;
   public mode:string="";
   public assetTypes:string[]=[];
@@ -57,6 +59,7 @@ export class AssetsAssignComponent implements OnInit {
   public buttonName:string="";
   public isCountSufficient:boolean=true;
   public assetInfo:AssetInfo[];
+  public isAnyInvalid :boolean=false;
   ngOnInit() {
     this.mode = sessionStorage.getItem("manual-mode").toString();
     this.userId= this.data;
@@ -100,11 +103,20 @@ export class AssetsAssignComponent implements OnInit {
       name: '',
       type:''
     });
+
+    if(this.mode == 'Assign'){
+      this.isValidCount.push(false);
+      this.countNumbers.push(0);
+    }
   }
 
   removeAddress(i: number) {
     this.assetAssign.splice(i, 1);
     this.dd.splice(i,1);
+    if(this.mode =='Assign'){
+      this.isValidCount.splice(i,1);
+      this.countNumbers.splice(i,1);
+    }
   }
 
   logValue() {
@@ -203,16 +215,27 @@ export class AssetsAssignComponent implements OnInit {
     });
  }
  public isSufficientCount(data:string,indx:number,key:string){
+   if(this.mode == 'Assign'){
     let selectCount = Number(data);
+    console.log(selectCount+" "+indx+" "+key);
     for(let i =0;i<this.assetInfo.length;i++){
       if(key == this.assetInfo[i].assetkey){
         if(selectCount > this.assetInfo[i].availableAssets){
-          //this.isCountSufficient = false;
-          return true;
+          this.isValidCount[indx] = true;
+          this.countNumbers[indx] = this.assetInfo[i].availableAssets;
+        }
+        else{
+          this.isValidCount[indx] = false;
         }
       }
     }
-  }
+    if(this.isValidCount.includes(true)){
+      this.isAnyInvalid = true;
+    }else{
+      this.isAnyInvalid = false;
+    }
+   }
+ } 
 
   
 }

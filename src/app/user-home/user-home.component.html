@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-12 text-center">
         <span class="text-danger">{{message}}</span>
-    </div> 
+    </div>  
     <div class="col-md-12 card-container">
         <mat-card (click)="personalInfo()" class ="offset-md-3  card-width">
             <mat-card-header>
@@ -27,15 +27,17 @@
         </mat-card>
       
     </div>
+<div class="row">
+    <div class="col-md-6">
     <div style="margin-top: 3%;" *ngIf="isUserSelected">
         <div class="row">
-            <div class="col-md-2 offset-md-1 input-group">
+            <div class="col-md-4 offset-md-1 input-group">
                 <div class="form-group">
                     <label>First Name</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="first">
                 </div>
             </div>
-            <div class="col-md-2 input-group">
+            <div class="col-md-4 input-group">
                 <div class="form-group">
                     <label>Last Name</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="last">
@@ -43,13 +45,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 offset-md-1 input-group display-style">
+            <div class="col-md-4 offset-md-1 input-group display-style">
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="email">
                 </div>
             </div>
-            <div class="col-md-2 input-group">
+            <div class="col-md-4 input-group">
                 <div class="form-group">
                     <label>Mobile No</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="mobile">
@@ -57,13 +59,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 offset-md-1 input-group">
+            <div class="col-md-4 offset-md-1 input-group">
                 <div class="form-group">
                     <label>Date of Joining</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="doj">
                 </div>
             </div>
-            <div class="col-md-2 input-group">
+            <div class="col-md-4 input-group">
                 <div class="form-group">
                     <label>Role</label>
                     <input type="text" class="form-control" [disabled]="0==0" [(ngModel)]="role">
@@ -71,6 +73,40 @@
             </div>
         </div>
     </div>
+  </div>
+  <div class="col-md-5 border-style">
+    <form (ngSubmit)="Myform.form.valid" style="margin-top:3%;" #Myform="ngForm">
+        <div class="row">
+            <div class="input-group">
+                <div class="form-group offset-md-1 col-md-10">
+                    <label>Subject</label>
+                    <input type="text" class="form-control" placeholder="Subject" required  [(ngModel)]="mailSubject"
+                        name="mailSubject" #fn="ngModel" [class.is-invalid]="fn.touched && fn.invalid" >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <div class="form-group offset-md-1 col-md-10">
+                    <label>Message</label>
+                    <textarea style="height: 117px;" class="form-control" placeholder="Message" required  [(ngModel)]="mailMessage"
+                        name="mailMessage" #fd="ngModel" [class.is-invalid]="fd.touched && fd.invalid" >
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <div class="form-group offset-md-8 col-md-4">
+                    <button type="button" class="btn btn-outline-primary mb-2" 
+                            [disabled]="Myform.invalid" (click)="sendMail()">Send Email
+                    </button>
+                </div>
+            </div>
+        </div>
+   </form>
+  </div>
+</div>
    <!-- <div style="margin-top: 3%;" *ngIf="mode == 'personal'">
             Personal Info..
     </div>

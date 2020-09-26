@@ -5,11 +5,11 @@ import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import {UserService} from '../services/user.service';
 import { TableData } from '../model/TableData';
 import { CommonService } from '../services/common.service';
-import { UserDetail } from '../model/User';
+import { MailSend, UserDetail } from '../model/User';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-user-home',
-  templateUrl: './user-home.component.html',
+  templateUrl: './user-home.component.html', 
   styleUrls: ['./user-home.component.css']
 })
 export class UserHomeComponent implements OnInit {
@@ -28,6 +28,8 @@ export class UserHomeComponent implements OnInit {
   public message:string='';
   public assetStatus:string='NO';
   public user:UserDetail;
+  public mailSubject:string="";
+  public mailMessage:string="";
   public viewHeaders =["","#","Specification","Qty.",""];
   public valueHeaders =["","#","assetName","assetCount",""];
 
@@ -127,4 +129,20 @@ export class UserHomeComponent implements OnInit {
    let dialogRef =  this.dialog.open(ProgressBarComponent,dialogConfig);
    return dialogRef;
   }
+
+  public sendMail(){
+ /*   console.log(this.mailSubject);
+    console.log(this.mailMessage);
+    console.log(this.userId);
+    console.log(this.name);
+*/ let progressBarRef = this.progressBar();
+    let mailSend = new MailSend(this.name,this.userId.toString(),this.mailSubject,this.mailMessage);
+    console.log(mailSend);
+    this.userService.sendMail(mailSend).subscribe(data=>{
+      console.log(data);
+      progressBarRef.close();
+      this.mailSubject ='Subject'
+      this.mailMessage = 'Body';
+    });
+  } 
 }

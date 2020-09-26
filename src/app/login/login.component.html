@@ -10,7 +10,7 @@
         </mat-form-field>
         <button mat-raised-button class="btn btn-outline-success" [disabled]="userName=='' || userPassword==''" type="submit" (click)="login()">Login</button>
         <div *ngIf="isInvalidUser" style="margin-top: 0.3%;">
-            <span class="text-danger">
+            <span class="text-danger" style="margin-left: 59px;">
                 Invalid Username or Password
             </span>
         </div>

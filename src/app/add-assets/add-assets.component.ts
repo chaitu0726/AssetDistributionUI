@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../services/admin.service';
 import { MatDialogConfig, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
-import { AssetsKeys, AssetInfo } from '../model/Assets';
+import { AssetsKeys, AssetInfo, AssetsDropDown, UserAssignAssset } from '../model/Assets';
 
 @Component({
   selector: 'app-add-assets',
@@ -20,6 +20,13 @@ export class AddAssetsComponent implements OnInit {
   public isBelow=false;
   public isDuplicateKey:boolean=false;
   public isDuplicateType:boolean=false;
+  public isAlreadyPresent:boolean=false;
+  public assetTypes:string[]=[];
+  public assetForTypes:UserAssignAssset[]=[];
+  public assetForType:string[]=[];
+  public Assets:AssetsDropDown[];
+  public assetSelectedType:string="";
+  public keysPreSelected:string[]=[];
   constructor(private adminService:AdminService,
               private dialogRef : MatDialogRef<AddAssetsComponent>,
               private dialog :MatDialog) { }
@@ -27,11 +34,57 @@ export class AddAssetsComponent implements OnInit {
   //public assetTypes=["Moniter","CPU"];
   public assetKeyAndTypedropdown : AssetsKeys[];
   public keys:string[]=[];
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.start();
    // this.assetTypes.push("New");
+   this.getDropDown();
   }
 
+  getDropDown()
+  {
+    let progressBarRef = this.progressBar();
+    //this.assetTypes = []; 
+    this.adminService.getAssetsDropDown().subscribe(data=>{
+        this.Assets = data;
+      for(let i=0;i<this.Assets.length;i++)
+      {
+        this.assetTypes.push(this.Assets[i].assetName);
+      }
+      this.assetTypes.push('New');
+      progressBarRef.close();
+    });
+  }
+
+  public changeFunctionForDropDown(data:string)
+  {
+    if(data.toLowerCase() == "new")
+    {
+      this.isAssetTypeNew  = true;
+      this.isBelow = false;
+    }
+    else{
+      this.isAssetTypeNew = false;
+      this.isBelow = true;
+    }
+    this.assetForType =[];
+    this.keysPreSelected=[];
+    //this.assetTypes.push('Select');
+    //console.log(data); 
+    //let temp = new UserAssignAssset("",'Select',0,'');
+    for(let i=0;i<this.Assets.length;i++)
+    {
+      if(data == this.Assets[i].assetName)
+      {
+          this.assetForTypes = this.Assets[i].assetTypes;
+        for(let j =0;j<this.Assets[i].assetTypes.length;j++){
+        //this.assetForType = this.Assets[i].assetTypes;
+          this.assetForType.push(this.Assets[i].assetTypes[j].assetName);
+          //this.keysPreSelected.push(this.Assets[i].assetTypes[j].assetKey);
+        }
+      }
+      //this.assetForType[0].name;
+    }
+  }
   public start()
   {
     let progressBarRef = this.progressBar();
@@ -87,12 +140,32 @@ export class AddAssetsComponent implements OnInit {
         }
       }
     }
+    if(this.isAlreadyPresent){
+        this.assetInfo = this.assetSelectedType;
+    }
     let progressBarRef = this.progressBar();
+    if(this.isAlreadyPresent){
+      //tempKey = '';
+      for(let k=0;k<this.assetForTypes.length;k++){
+        if(this.assetForTypes[k].assetName == this.assetSelectedType ){
+          tempKey = this.assetForTypes[k].assetKey;
+        }
+      }
+      console.log(tempKey+" "+this.assetNumber);
+
+      this.adminService.updateAssetCount(tempKey,this.assetNumber).subscribe(data=>{
+        console.log(data);
+       progressBarRef.close();
+      });
+    }else{
     let addAsset = new AssetInfo(0,tempKey,this.assetInfo,0,this.assetNumber,this.assetNumber,tempType,this.isAssetTypeNew);
+    console.log(addAsset);
+    
     this.adminService.addNewAssets(addAsset).subscribe(data=>{
       console.log(addAsset);
       console.log(data);
-      this.start();
+      this.assetTypes =[];
+      this.getDropDown();
       //this.assetType="";
       //this.newAssetType ="";
       //this.assetKey="";
@@ -100,6 +173,7 @@ export class AddAssetsComponent implements OnInit {
      progressBarRef.close();
     });
     
+   }
     
   }
  
@@ -153,7 +227,7 @@ export class AddAssetsComponent implements OnInit {
         }
       }
       else{
-        this.isBelow = false; 
+        this.isBelow = false;  
         this.isDuplicateType = false;
       }
       if(this.isDuplicateKey || this.isDuplicateType){

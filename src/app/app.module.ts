@@ -23,7 +23,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {HttpClientModule} from'@angular/common/http';
 import { AddAssetsComponent } from './add-assets/add-assets.component';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +54,9 @@ import {MatIconModule} from '@angular/material/icon'
     MatProgressBarModule,
     HttpClientModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -19,6 +19,10 @@ export class ViewAssetsComponent implements OnInit {
   public mode:string='';
   public userId:number=0;
   public userAssignAssets:UserAssignAssset[]=[];
+  public tempAssignAssets:UserAssignAssset[]=[];
+  public isInvalid:boolean[]=[];
+  public changeClass:string[]=[];
+  public isNotAssign:boolean = false;
   //public assetDistribute:AssetsDistribute[]=[]; 
   public 
   constructor(
@@ -31,6 +35,9 @@ export class ViewAssetsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setTableData();
+    if(this.mode == 'recommonded'){
+        this.checkInvalid();
+    }
   }
   setTableData() {
     this.mode = this.data.mode;
@@ -39,35 +46,7 @@ export class ViewAssetsComponent implements OnInit {
     this.rows = this.data.rows;
     this.userId = this.data.userId;
   }
-  /*
-  public headers =["","","#","Specification","Qty.","",""];
-  public headers1 =["","#","Specification","Assigned","Available","",""];
   
-  public rows1=[
-    {
-      "Specification":"HP/21.5 Inch/Full HD",
-      "Assigned":100,
-      "Available":500
-    },
-    {
-      "Specification":"ASUS/AMD Ryzen/8GB+512GB SSD+4GB NVIDIA Graphics/Windows 10",
-      "Assigned":150,
-      "Available":275
-    }
-];
-  public  rows2 =[
-   {
-     "Key":"MN01",
-     "Specification":"HP/21.5 Inch/Full HD",
-     "Qty.":2
-   },
-   {
-    "Key":"CPU01",
-    "Specification":"ASUS/AMD Ryzen/8GB+512GB SSD+4GB NVIDIA Graphics/Windows 10",
-    "Qty.":1
-  }
-  ];
-*/
   public assignToUser()
   {
     let progressBarRef = this.progressBar();
@@ -106,5 +85,32 @@ export class ViewAssetsComponent implements OnInit {
   dialogConfig.width = "50%";
   let dialogRef =  this.dialog.open(ProgressBarComponent,dialogConfig);
   return dialogRef;
+ }
+
+ public checkInvalid()
+ {
+   let progressBarRef = this.progressBar();
+  this.tempAssignAssets =this.data.rows;
+  this.adminService.getAssetsDetails().subscribe(data=>{
+  
+    for(let i=0;i<this.tempAssignAssets.length;i++){
+
+      for(let j=0;j<data.length;j++){
+
+        if(data[j].assetkey == this.tempAssignAssets[i].assetKey){
+          
+          if(this.tempAssignAssets[i].assetCount > data[j].availableAssets){
+            this.isInvalid[i] = true;
+            this.changeClass[i] = 'text-danger';
+            break;
+          }
+        }
+      }
+    }
+    if(this.isInvalid.includes(true)){
+      this.isNotAssign = true;
+    }
+    progressBarRef.close();
+  });
  }
 }

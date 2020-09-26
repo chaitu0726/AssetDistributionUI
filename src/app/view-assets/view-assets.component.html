@@ -10,12 +10,15 @@
 
     <tr *ngFor="let row of rows;let i =index;">
         <td *ngFor="let column of valueHeaders">
-           <span *ngIf="column =='#'">{{i+1}}</span> {{row[column]}}
+           <span *ngIf="column =='#'">{{i+1}}</span> <span class="{{changeClass[i]}}">{{row[column]}}</span>
         </td>
-    </tr>
+    </tr> 
 </table>
 <div class="col-md-12 text-center">
-    <button class="btn btn-outline-success col-md-2" *ngIf="mode=='recommonded'" (click)="assignToUser()">Assign</button>
+    <button class="btn btn-outline-success col-md-2" *ngIf="mode=='recommonded'" [disabled]="isNotAssign"  (click)="assignToUser()">Assign</button>
     <button class="btn btn-outline-danger col-md-2" *ngIf="mode=='view'" (click)="leaveFromUser()">Leave Assets</button>
+</div>
+<div class="col-md-12 text-center" *ngIf="mode=='recommonded' && isNotAssign" style="margin-top: 10px;">
+        <h4 class="text-danger"> Assign Manually as highlighted Asset/s is/are Insufficient/s.</h4>
 </div>
  

@@ -25,4 +25,13 @@ export class UserDetail
     {}
 }
 
+export class MailSend{
+    constructor(
+            public name:string,
+            public userId:string,
+            public mailSubject:string,
+            public mailBody:string
+    ){}
+} 
+
 

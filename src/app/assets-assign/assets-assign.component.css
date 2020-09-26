@@ -40,3 +40,15 @@
         background: black;
         border: none;
     }
+
+      .example-button {
+        margin-top: 14px;
+      }
+      
+      .example-tooltip-red {
+        background: #b71c1c;
+      }
+      .button-style{
+        background: white;
+        border: none;
+      }

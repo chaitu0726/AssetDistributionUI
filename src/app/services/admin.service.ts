@@ -64,4 +64,9 @@ export class AdminService {
   {
     return this.http.get<string[]>(`${this.URL}/api/getRoleDropdown`);
   }
+
+  public updateAssetCount(key:string,count:number):Observable<boolean>
+  {
+    return this.http.get<boolean>(this.URL+"/api/updateAssetCount?key="+key+"&count="+count);
+  }
 } 

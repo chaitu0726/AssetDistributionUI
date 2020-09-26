@@ -58,17 +58,35 @@
                       <span class="text-danger" [class.d-none]="sf.valid || sf.untouched"></span>
                     </div>
               </div>
-              <span style="margin-left: 1%;"></span>
+              
               <div class="input-group" style="width:80px;">
                   <div class="form-group">
                       <label>Count</label>
                       <input type="text" required class="form-control"
-                       [(ngModel)]="asset.count" name="count_{{asset.id}}" #fn="ngModel" pattern="[1-4]{1}" [class.is-invalid]="fn.touched && fn.invalid"
-                       (input)="isSufficientCount($event,i,asset.key)">
+                       [(ngModel)]="asset.count" name="count_{{asset.id}}" #fn="ngModel" pattern="[0-9]{1,4}"
+                        [class.is-invalid]="fn.touched && fn.invalid || (mode == 'Assign' && isValidCount[i])"
+                       (input)="isSufficientCount(asset.count,i,asset.key)">
+                      
                        <span class="text-danger" [class.d-none]="fn.valid || fn.untouched"></span>
+                      
                        <div *ngIf="fn.errors?.pattern" class="text-danger">Max 4</div>
+                       
                     </div>
               </div>
+              <div>
+                <span style="margin-left: 0.3%;"></span>
+                <div class="input-group">
+                  <div class="form-group">
+                    <button  *ngIf="mode == 'Assign' && isValidCount[i]"
+                        matTooltip="You have only {{countNumbers[i]}} Asset/s left"
+                        matTooltipClass="example-tooltip-red"
+                        aria-label="Button that shows a red tooltip"
+                        class="button-style example-button">
+                        <mat-icon>error</mat-icon>
+                  </button>
+                  </div>
+                </div>
+              </div> 
             </div>
           </section>
           <div class="row ">
@@ -78,7 +96,7 @@
           </div>
           <div class="col-6">
               <button type="button" class="btn btn-success mb-2 offset-md-10" (click)="logValue()"
-              [disabled]="assetForm.invalid">{{buttonName}}</button>
+              [disabled]="assetForm.invalid || isAnyInvalid">{{buttonName}}</button>
           </div>
           </div>
         </div>
